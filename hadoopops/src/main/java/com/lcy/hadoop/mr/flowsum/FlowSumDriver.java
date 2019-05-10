@@ -1,5 +1,8 @@
-package com.lcy.hadoop.mr.wc;
+package com.lcy.hadoop.mr.flowsum;
 
+import com.lcy.hadoop.mr.wc.WcDriver;
+import com.lcy.hadoop.mr.wc.WcMapper;
+import com.lcy.hadoop.mr.wc.WcReducer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -8,34 +11,31 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-
 import java.io.IOException;
 
 /**
  * Created by： luochengyue
- * date: 2019/5/7.
- * desc：yarn的客户端，
+ * date: 2019/5/10.
+ * desc：这个包主要是用于做流量统计用的，需求说明，通过日志文件统计上传/下载和总流量跟据每个手机号做汇总
  * @version:
  */
-public class WcDriver {
+public class FlowSumDriver {
 
-    public static void main(String[] args) throws Exception{
-        //由于涉及到操作hdfs数据，有一个用户的概念所以需要设置下hadoop的用户名 -DHADOOP_USER_NAME=hadoop 就可以设置用户名了
-        //这个可以查看FileSystem里面会发现获取一个系统内的HADOOP_USER_NAME作为用户名 job.setUser应该也可以回头试下
+    public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         conf.set("fs.defaultFS","hdfs://hadoop1:9000");//可不配置默认操作本地的
         Job job = Job.getInstance(conf);
         //接着主要设置几个简单的参数即可 主要设置包括map类，reduce类，map输出参数类型，reduce最终输出类型，驱动所在的jar包
         //这些方法都可以在job上看到set相关的方法
-        job.setJarByClass(WcDriver.class);//所在jar包
-        job.setMapperClass(WcMapper.class);
-        job.setReducerClass(WcReducer.class);
+        job.setJarByClass(FlowSumDriver.class);//所在jar包
+        job.setMapperClass(FlowSumMap.class);
+        job.setReducerClass(FlowSumReduce.class);
         //map输出的相关参数
         job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(IntWritable.class);
+        job.setMapOutputValueClass(FlowBean.class);
         //reduce输出的相关参数
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputValueClass(FlowBean.class);
         //输入输出参数路径设置
         FileInputFormat.setInputPaths(job,new Path(args[0]));
         FileOutputFormat.setOutputPath(job,new Path(args[1]));
