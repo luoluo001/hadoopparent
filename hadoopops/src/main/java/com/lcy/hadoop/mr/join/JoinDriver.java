@@ -56,7 +56,7 @@ public class JoinDriver {
             List<JoinBean> studentBenas = new ArrayList<>();
             try {
                 for(JoinBean bean:joinBeans){
-                    //这里是挨个序列化，所以bean实际上以最后一个bean的数据会覆盖前面的需要坐下拷贝
+                    //这里是挨个序列化，所以bean实际上以最后一个bean的数据会覆盖前面的需要做下拷贝
                     if(bean.isClassFlas()){
                         BeanUtils.copyProperties(classBean,bean);
                     }else{
