@@ -21,7 +21,7 @@ public class FriendTwoDriver {
 
     //将key为公共好友的 两两组成一队,value以当前的共同好友为value
     static class FriendTwoMapper extends Mapper<LongWritable,Text,Text,Text> {
-        Text fValue  = new Text();
+        Text fValue  = new Text();;
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             String[] splicts = value.toString().split("\t");

@@ -69,7 +69,6 @@ public class FriendOneDriver {
         job.setReducerClass(FriendOneReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
-
         FileInputFormat.setInputPaths(job,new Path(args[0]));
         FileUtils.deleteFile(args[1]);
         FileOutputFormat.setOutputPath(job,new Path(args[1]));
