@@ -12,6 +12,7 @@
         <module>hadoopops</module>
         <module>hiveops</module>
         <module>hbaseops</module>
+        <module>stormops</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
