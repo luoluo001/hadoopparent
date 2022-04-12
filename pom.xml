@@ -16,7 +16,7 @@
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hadoop-core-version>2.6.4</hadoop-core-version>
+        <hadoop-core-version>3.2.3</hadoop-core-version>
     </properties>
     <dependencyManagement>
         <dependencies>
